@@ -9,289 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
+    <link rel="stylesheet" href="src/style.css">
 
-        body {
-            background-color: rgb(0, 0, 33);
-            color: white;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            height: 80px;
-            background-color: rgb(18, 18, 62);
-        }
-
-        nav ul {
-            display: flex;
-            justify-content: center;
-        }
-
-        nav ul li {
-            list-style: none;
-            margin: 0 23px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-        }
-
-        nav ul li a:hover {
-            color: rgb(153, 153, 226);
-            font-size: 1.01rem;
-        }
-
-        main hr {
-            border: 0;
-            background: #9c97f1;
-            height: 1.2px;
-            margin: 60px 84px;
-        }
-
-        .left {
-            font-size: 1.5rem;
-        }
-
-        .firstSection {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            width: 130px 0;
-        }
-
-        .firstSection>div {
-            width: 30%;
-        }
-
-        .leftSection {
-            font-size: 2.5rem;
-        }
-
-        .leftSection .button {
-            padding: 50px 0;
-        }
-
-        .leftSection .btn {
-            padding: 12px;
-            background: #1e2167;
-            color: white;
-            border: 2px solid white;
-            border-radius: 20px;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .rightSection img {
-            width: 80%;
-            margin: 50px 0;
-        }
-
-        .purple {
-            color: rgb(178, 135, 218);
-        }
-
-        .text-gray {
-            color: gray;
-        }
-
-        #element {
-            color: rgb(178, 135, 218);
-        }
-
-        .about-me {
-            background-color: rgb(0, 0, 33);
-            padding: 0 0;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .about-me h2 {
-            font-size: 32px;
-            margin-bottom: 40px;
-        }
-
-        .about-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .about-content img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-        }
-
-        .about-content p {
-            font-size: 18px;
-            line-height: 1.6;
-        }
-
-
-        .thirdSection {
-            max-width: 80vw;
-            margin: auto;
-            height: 80vh;
-        }
-
-        .thirdSection h1 {
-            font-size: 1.9rem;
-        }
-
-        .thirdSection .box {
-            background: white;
-            width: 80vw;
-            height: 2px;
-            margin: 56px 0;
-            display: flex;
-        }
-
-        .thirdSection .vertical {
-            height: 93px;
-            width: 1px;
-            background-color: white;
-            margin: 0 290px;
-        }
-
-
-        .timeline-section {
-            background-color: rgb(0, 0, 33);
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .timeline {
-            position: relative;
-        }
-
-        .timeline:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 2px;
-            height: 100%;
-            background-color: #333;
-            transform: translateX(-50%);
-        }
-
-        .timeline-item {
-            position: relative;
-            padding: 20px 0;
-        }
-
-        .timeline-date {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #333;
-            color: #fff;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .timeline-content {
-            margin-left: 50px;
-            text-align: left;
-        }
-
-        .timeline-content h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .timeline-content p {
-            font-size: 16px;
-            line-height: 1.4;
-        }
-
-
-        .image-top {
-            width: 109px;
-            position: relative;
-            margin: 8px -57px;
-
-        }
-
-        .image-top1 {
-            width: 100px;
-            position: relative;
-            margin: 32px -62px;
-
-        }
-
-
-        .vertical-title {
-            position: relative;
-            top: -30px;
-            width: 184px;
-            left: -34px;
-        }
-
-        .vertical-desc {
-            position: relative;
-            top: 0px;
-            left: -34px;
-            width: 223px;
-            font-size: 10px;
-            text-align: justify;
-        }
-
-        .footer {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .footer p {
-            margin: 0;
-        }
-
-        .social-links {
-            list-style: none;
-            padding: 0;
-            margin-top: 10px;
-        }
-
-        .social-links li {
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        .social-links li:last-child {
-            margin-right: 0;
-        }
-
-        .social-links a {
-            color: #fff;
-            font-size: 20px;
-        }
-    </style>
 </head>
 
 <body>
@@ -386,38 +105,61 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-        </section>
-        <hr>
-        <section class="timeline-section">
-            <div class="container">
-                <h2>Timeline</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">
-                            <span class="date">2021-2022</span>
-                        </div>
-                        <div class="timeline-content">
-                            <h3>Lost and Found Website</h3>
-                            <p>If some one find a stray object, then they can report it on this webiste. simlarly if
-                                some one lost there belonging then they can write missing report.</p>
-                        </div>
+
+                <div class="vertical">
+                    <img class="image-top1" src="static/cp.png" alt="">
+                    <div class="vertical-title">
+                        Internship at Persistant (June'23-Pres.)
                     </div>
 
-                    <div class="timeline-item">
-                        <div class="timeline-date">
-                            <span class="date">2022 - Present</span>
-                        </div>
-                        <div class="timeline-content">
-                            <h3>Resiliency Testing of AWS Services</h3>
-                            <p>Testing resiliency of EC2, RDS and Availability Zone using the concept of Chaos
-                                Engineering with the help of Fault Injection Simulator. </p>
-                        </div>
+                    <div class="vertical-desc">
+                        Get to learn more on core subject of CS/IT
+                        <ul>
+                            <li>Basic of Linux</li>
+                            <li>Data Structure and Algorithm</li>
+                            <li>DBMS</li>
+                            <li>OS</li>
+                            <li>Computer Networks</li>
+                        </ul>
                     </div>
-
                 </div>
             </div>
         </section>
+        <hr>
+        <div id="Project">
+            <span class="text-gray">Projects I have worked so far</span>
+            <h1>Projects</h1>
+            <section class="timeline-section">
+                <div class="container">
+                    <h2>Timeline</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">
+                                <span class="date">2021-2022</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Lost and Found Website</h3>
+                                <p>If some one find a stray object, then they can report it on this webiste. simlarly if
+                                    some one lost there belonging then they can write missing report.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">
+                                <span class="date">2022 - Present</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Resiliency Testing of AWS Services</h3>
+                                <p>Testing resiliency of EC2, RDS and Availability Zone using the concept of Chaos
+                                    Engineering with the help of Fault Injection Simulator. </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
 
     </main>
 
