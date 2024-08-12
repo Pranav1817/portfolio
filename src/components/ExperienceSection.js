@@ -15,7 +15,7 @@ import accentureCertificate from '@/app/certificates/AccentureCertificate.pdf';
 import codingNinjasCertificate from '@/app/certificates/CodingNinjasCertificate.pdf';
 import persistentCertificate from '@/app/certificates/PersistentCertificate.pdf';
 import eduskillsCertificate from '@/app/certificates/EduskillsCertificate.pdf';
-import hakxcoreCertificate from '@/app/certificates/EduSkillsCertificate.pdf'; // Update with the actual path
+import hakxcoreCertificate from '@/app/certificates/EduskillsCertificate.pdf'; // Update with the actual path
 
 const experiences = [
   { company: 'Accenture in India', logo: accentureLogo, position: 'Security Delivery Associate', certificate: accentureCertificate },
