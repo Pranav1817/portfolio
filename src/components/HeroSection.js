@@ -17,7 +17,7 @@ export default function HeroSection() {
                 className="rounded-full mb-6 shadow-2xl border-4 border-white"
               />
               <h1 className="text-4xl lg:text-6xl font-extrabold mb-2">Pranav Keshao Kumbhalkar</h1>
-              <p className="text-lg lg:text-2xl font-semibold">Software Developer | Freelancer</p>
+              <p className="text-lg lg:text-2xl font-semibold">Software Developer | Freelancer | Security Engineer</p>
             </div>
     
             {/* Right Side: Brief Introduction and Call to Action */}

@@ -59,7 +59,7 @@ export default function ExperienceSection() {
               <div className="flex justify-center">
                 <div className="w-full max-w-md mx-auto">
                   <div className="bg-white shadow-md rounded-lg lg:flex">
-                    <div className="p-4">
+                    <div className="p-4 flex justify-center">
                       <Image src={experiences[currentIndex].logo} alt={experiences[currentIndex].company} width={110} height={110} className='min-w-100' /> 
                     </div>
                     <div className="p-4">
