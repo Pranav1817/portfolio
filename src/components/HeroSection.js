@@ -32,10 +32,9 @@ export default function HeroSection() {
     
             {/* Right Side: Brief Introduction and Call to Action */}
             <div className="lg:w-1/2 flex flex-col justify-center text-center lg:text-justify">
-              <p className="text-lg lg:text-xl max-w-xl leading-relaxed mx-auto lg:mx-0">
+              <p className="text-lg font-semibold lg:text-xl max-w-xl leading-relaxed mx-auto lg:mx-0">
                 I am a passionate Software Developer with experience in full-stack development, 
-                specializing in modern web technologies. I am actively looking for a full-time opportunity 
-                in the IT industry where I can contribute and grow.
+                specializing in modern web technologies. Currently I am working at Accenture in Pune as a Security Delivery Associate in Identiy and Access Mangement domain using CyberArk
               </p>
               <div className="my-6 flex gap-3 " >
                 <Link href="/#project" className="font-bold inline-block bg-white text-blue-600 text-lg px-8 py-3 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
