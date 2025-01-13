@@ -1,7 +1,17 @@
+"use client";
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import img from '/public/section1.png';
+import { DialogPanel, Dialog } from '@headlessui/react';
+import resume from '@/app/resume/pranavkumbhalkarsde1.pdf';
 export default function HeroSection() {
+  const [certificateUrl, setCertificateUrl] = useState('');
+  const [open, setOpen] = useState(false);
+  const handleCardClick = (certificate) => {
+    setCertificateUrl(certificate);
+    setOpen(true);
+  };
     return (
         <section className="relative flex items-center justify-center bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white h-full">
 
@@ -27,13 +37,29 @@ export default function HeroSection() {
                 specializing in modern web technologies. I am actively looking for a full-time opportunity 
                 in the IT industry where I can contribute and grow.
               </p>
-              <div className="my-6" >
-                <Link href="/#project" className="inline-block bg-white text-blue-600 font-semibold text-lg px-8 py-3 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+              <div className="my-6 flex gap-3 " >
+                <Link href="/#project" className="font-bold inline-block bg-white text-blue-600 text-lg px-8 py-3 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
                     View Projects
                 </Link>
+                <button onClick={() => handleCardClick(resume)} className=" inline-block bg-white  text-blue-600 font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+                        Resume
+                </button>
               </div>
             </div>
           </div>
+          <Dialog open={open} onClose={() => setOpen(false)} className="fixed inset-0 flex items-center justify-center p-4">
+                  <DialogPanel className="bg-white rounded-lg p-6 shadow-lg w-[90vw] h-[80vh]">
+                    <iframe src={certificateUrl} className="w-full h-[90%]" />
+                    <div className="mt-4 flex justify-between">
+                      <button onClick={() => window.open(certificateUrl, '_blank')} className="text-blue-500 underline">
+                        Open in New Window
+                      </button>
+                      <button onClick={() => setOpen(false)} className="text-red-500 underline">
+                        Close
+                      </button>
+                    </div>
+                  </DialogPanel>
+                </Dialog>
         </section>
       );
 }

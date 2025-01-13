@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Dialog } from '@headlessui/react';
+import { DialogPanel, Dialog } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 // Import company logos
 import accentureLogo from "@/Images/accenture.png";
@@ -82,7 +82,7 @@ export default function ExperienceSection() {
 
       {/* Pop-up Window */}
       <Dialog open={open} onClose={() => setOpen(false)} className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel className="bg-white rounded-lg p-6 shadow-lg w-[90vw] h-[80vh]">
+        <DialogPanel className="bg-white rounded-lg p-6 shadow-lg w-[90vw] h-[80vh]">
           <iframe src={certificateUrl} className="w-full h-[90%]" />
           <div className="mt-4 flex justify-between">
             <button onClick={() => window.open(certificateUrl, '_blank')} className="text-blue-500 underline">
@@ -92,7 +92,7 @@ export default function ExperienceSection() {
               Close
             </button>
           </div>
-        </Dialog.Panel>
+        </DialogPanel>
       </Dialog>
     </div>
   );
