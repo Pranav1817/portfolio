@@ -1,396 +1,700 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pranav Kumbhalkar — CyberArk / PAM Engineer</title>
+<title>Pranav Kumbhalkar — Java Backend Engineer</title>
+<meta name="description" content="Pranav Kumbhalkar — Java backend engineer building microservices, event-driven systems and secure APIs with Spring Boot, Kafka and AWS.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#0a0e14;
-    --panel:#0f1620;
-    --panel-2:#131c28;
-    --line:#1f2c3a;
-    --line-bright:#2c3e52;
-    --text:#dce4ec;
-    --muted:#7d8da0;
-    --dim:#56657a;
-    --cyan:#36e0c4;
-    --cyan-dim:#1d9e8c;
-    --amber:#f0b73c;
-    --red:#ff6b6b;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--ink);
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-  ::selection{background:var(--cyan);color:var(--ink)}
-  a{color:inherit;text-decoration:none}
+/* ============ TOKENS ============ */
+:root{
+  --mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans:'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --radius:10px;
+  --maxw:960px;
+  --ease:cubic-bezier(.22,.9,.32,1);
+}
+html[data-theme="dark"]{
+  --bg:#0C1118;
+  --bg-2:#0F1620;
+  --surface:#131C28;
+  --surface-2:#182333;
+  --border:#233145;
+  --border-soft:#1B2636;
+  --ink:#E7EEF5;
+  --ink-2:#B9C6D6;
+  --muted:#8A97A8;
+  --faint:#5D6B7E;
+  --mint:#57C99B;
+  --mint-dim:rgba(87,201,155,.12);
+  --amber:#F2A65A;
+  --amber-dim:rgba(242,166,90,.13);
+  --blue:#6FA8FF;
+  --blue-dim:rgba(111,168,255,.12);
+  --red:#E5735F;
+  --terminal-bg:#0A0F15;
+  --code-str:#9CD2A8;
+  --code-key:#7FB5FF;
+  --code-num:#F2A65A;
+  --shadow:0 12px 40px rgba(0,0,0,.45);
+  --glow:0 0 0 1px rgba(87,201,155,.25), 0 8px 32px rgba(87,201,155,.08);
+}
+html[data-theme="light"]{
+  --bg:#F3F5F8;
+  --bg-2:#EDF0F4;
+  --surface:#FFFFFF;
+  --surface-2:#F7F9FB;
+  --border:#D7DEE7;
+  --border-soft:#E4E9F0;
+  --ink:#18222E;
+  --ink-2:#3A4756;
+  --muted:#5F6D7E;
+  --faint:#93A0B0;
+  --mint:#149467;
+  --mint-dim:rgba(20,148,103,.09);
+  --amber:#C57422;
+  --amber-dim:rgba(197,116,34,.10);
+  --blue:#2563C7;
+  --blue-dim:rgba(37,99,199,.09);
+  --red:#C24E3A;
+  --terminal-bg:#101823;
+  --code-str:#8FD0A0;
+  --code-key:#82B8FF;
+  --code-num:#F2A65A;
+  --shadow:0 10px 32px rgba(24,34,46,.10);
+  --glow:0 0 0 1px rgba(20,148,103,.28), 0 8px 28px rgba(20,148,103,.10);
+}
+/* ============ BASE ============ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  transition:background .35s var(--ease), color .35s var(--ease);
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--mint-dim);color:var(--mint)}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono)}
 
-  .mono{font-family:'JetBrains Mono',monospace}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+/* subtle grid background */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(var(--border-soft) 1px, transparent 1px),
+                   linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+  background-size:48px 48px;
+  opacity:.25;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 75%);
+}
+main, header.site, footer.site{position:relative;z-index:1}
 
-  /* ---------- ambient grid backdrop ---------- */
-  .grid-bg{
-    position:fixed;inset:0;z-index:0;pointer-events:none;
-    background-image:
-      linear-gradient(var(--line) 1px,transparent 1px),
-      linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:48px 48px;
-    opacity:.25;
-    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 10%,transparent 70%);
-  }
+/* ============ NAV ============ */
+header.site{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:color-mix(in srgb, var(--bg) 78%, transparent);
+  border-bottom:1px solid var(--border-soft);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-brand{font-family:var(--mono);font-size:.85rem;color:var(--ink);font-weight:500;display:flex;align-items:center;gap:8px}
+.nav-brand .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px var(--mint);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{
+  font-family:var(--mono);font-size:.75rem;color:var(--muted);
+  padding:7px 11px;border-radius:6px;transition:color .2s, background .2s;
+}
+.nav-links a:hover{color:var(--ink);background:var(--surface-2);text-decoration:none}
+.theme-btn{
+  margin-left:8px;
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:.72rem;font-weight:500;
+  color:var(--ink-2);
+  background:var(--surface);border:1px solid var(--border);
+  padding:7px 12px;border-radius:999px;cursor:pointer;
+  transition:border-color .2s, transform .15s, background .3s;
+}
+.theme-btn:hover{border-color:var(--mint);transform:translateY(-1px)}
+.theme-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.theme-btn .icon-sun{display:none}
+html[data-theme="light"] .theme-btn .icon-sun{display:block}
+html[data-theme="light"] .theme-btn .icon-moon{display:none}
 
-  /* ---------- nav ---------- */
-  nav{
-    position:sticky;top:0;z-index:50;
-    backdrop-filter:blur(12px);
-    background:rgba(10,14,20,.72);
-    border-bottom:1px solid var(--line);
-  }
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
-  .brand{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;letter-spacing:.5px;display:flex;align-items:center;gap:9px}
-  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:pulse 2.4s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-  .navlinks{display:flex;gap:26px;font-size:13.5px}
-  .navlinks a{color:var(--muted);transition:color .2s;font-weight:500}
-  .navlinks a:hover{color:var(--cyan)}
-  @media(max-width:680px){.navlinks{display:none}}
+/* ============ HERO ============ */
+.hero{padding:72px 0 56px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.eyebrow{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;
+  color:var(--mint);text-transform:uppercase;font-weight:500;
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--mint-dim);border:1px solid color-mix(in srgb, var(--mint) 30%, transparent);
+  padding:6px 12px;border-radius:999px;margin-bottom:20px;
+}
+h1{
+  font-size:clamp(2.3rem, 5.4vw, 3.4rem);
+  font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:14px;
+}
+h1 .accent{color:var(--mint)}
+.hero-sub{color:var(--muted);font-size:1.02rem;max-width:46ch;margin-bottom:26px}
+.hero-sub strong{color:var(--ink-2);font-weight:600}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:30px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:.8rem;font-weight:500;
+  padding:11px 18px;border-radius:8px;cursor:pointer;
+  border:1px solid transparent;transition:transform .15s, box-shadow .2s, border-color .2s;
+}
+.btn:hover{transform:translateY(-2px);text-decoration:none}
+.btn-primary{background:var(--mint);color:#0B1310;border-color:var(--mint)}
+.btn-primary:hover{box-shadow:var(--glow)}
+.btn-ghost{background:transparent;color:var(--ink-2);border-color:var(--border)}
+.btn-ghost:hover{border-color:var(--faint)}
+.hero-stats{display:flex;gap:28px;flex-wrap:wrap}
+.stat .n{font-family:var(--mono);font-size:1.35rem;font-weight:700;color:var(--ink)}
+.stat .l{font-size:.74rem;color:var(--faint);letter-spacing:.05em;text-transform:uppercase}
 
-  /* ---------- hero ---------- */
-  .hero{position:relative;z-index:1;padding:90px 0 70px}
-  .eyebrow{
-    font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:2px;
-    text-transform:uppercase;color:var(--cyan);margin-bottom:22px;display:flex;align-items:center;gap:10px;
-  }
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--cyan-dim)}
-  h1{
-    font-family:'Space Grotesk',sans-serif;font-weight:700;
-    font-size:clamp(40px,7vw,76px);line-height:1.02;letter-spacing:-1.5px;margin-bottom:22px;
-  }
-  h1 .accent{color:var(--cyan)}
-  .lede{font-size:clamp(16px,2.2vw,19px);color:var(--muted);max-width:620px;margin-bottom:36px}
-  .lede strong{color:var(--text);font-weight:600}
-  .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-  .btn{
-    font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:500;
-    padding:12px 22px;border-radius:8px;transition:all .2s;border:1px solid transparent;
-  }
-  .btn-primary{background:var(--cyan);color:var(--ink);font-weight:700}
-  .btn-primary:hover{box-shadow:0 0 24px rgba(54,224,196,.45);transform:translateY(-2px)}
-  .btn-ghost{border-color:var(--line-bright);color:var(--text)}
-  .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+/* terminal */
+.terminal{
+  background:var(--terminal-bg);
+  border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  box-shadow:var(--shadow);
+  font-family:var(--mono);font-size:.78rem;line-height:1.7;
+}
+.term-bar{
+  display:flex;align-items:center;gap:6px;
+  padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.025);
+}
+.term-bar .b{width:11px;height:11px;border-radius:50%}
+.term-bar .b1{background:#E5735F}.term-bar .b2{background:#F2C14E}.term-bar .b3{background:#57C99B}
+.term-bar .title{margin-left:8px;color:#5D6B7E;font-size:.7rem}
+.term-body{padding:16px 18px 20px;min-height:290px;color:#C4D2E0}
+.term-body .prompt{color:#57C99B}
+.term-body .cmd{color:#E7EEF5}
+.term-body .flag{color:#7FB5FF}
+.t-key{color:var(--code-key)}
+.t-str{color:var(--code-str)}
+.t-num{color:var(--code-num)}
+.t-brace{color:#8A97A8}
+.cursor{display:inline-block;width:8px;height:15px;background:#57C99B;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.term-status{color:#57C99B;font-size:.72rem}
 
-  /* ---------- vault status panel (signature) ---------- */
-  .vault{
-    position:relative;z-index:1;margin-top:54px;
-    background:linear-gradient(180deg,var(--panel-2),var(--panel));
-    border:1px solid var(--line-bright);border-radius:14px;overflow:hidden;
-    box-shadow:0 30px 80px -40px rgba(0,0,0,.8);
-  }
-  .vault-head{
-    display:flex;align-items:center;gap:8px;padding:13px 18px;
-    border-bottom:1px solid var(--line);background:rgba(0,0,0,.25);
-  }
-  .vault-head .lights{display:flex;gap:7px}
-  .vault-head .lights span{width:11px;height:11px;border-radius:50%}
-  .l-red{background:#ff5f57}.l-amber{background:#febc2e}.l-green{background:#28c840}
-  .vault-title{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--dim);margin-left:8px}
-  .vault-body{padding:6px 0}
-  .vrow{
-    display:grid;grid-template-columns:30px 1fr auto;gap:14px;align-items:center;
-    padding:13px 22px;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:13.5px;
-  }
-  .vrow:last-child{border-bottom:none}
-  .vrow .idx{color:var(--dim);font-size:12px}
-  .vrow .label{color:var(--text)}
-  .vrow .label b{color:var(--cyan);font-weight:500}
-  .status{font-size:11.5px;letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:7px;color:var(--muted)}
-  .status .s-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+/* ============ SECTION SHELL ============ */
+section{padding:44px 0}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+.sec-head h2{font-size:1.35rem;font-weight:800;letter-spacing:-.01em}
+.sec-head .path{font-family:var(--mono);font-size:.75rem;color:var(--faint)}
 
-  /* ---------- section scaffolding ---------- */
-  section{position:relative;z-index:1;padding:70px 0}
-  .sec-label{
-    font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;
-    color:var(--dim);margin-bottom:14px;display:flex;align-items:center;gap:12px;
-  }
-  .sec-label .num{color:var(--cyan)}
-  .sec-label::after{content:"";flex:1;height:1px;background:var(--line)}
-  h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,4vw,38px);font-weight:600;letter-spacing:-.6px;margin-bottom:18px}
-  .sec-intro{color:var(--muted);max-width:640px;margin-bottom:42px;font-size:16px}
+/* ============ ENDPOINT ROWS (signature) ============ */
+.endpoint{
+  background:var(--surface);
+  border:1px solid var(--border-soft);
+  border-radius:var(--radius);
+  margin-bottom:12px;
+  overflow:hidden;
+  transition:border-color .25s, box-shadow .25s;
+}
+.endpoint.open{border-color:color-mix(in srgb, var(--mint) 45%, var(--border));box-shadow:var(--glow)}
+.ep-row{
+  width:100%;display:flex;align-items:center;gap:14px;
+  padding:15px 18px;background:transparent;border:none;cursor:pointer;
+  font-family:var(--mono);text-align:left;color:var(--ink);
+}
+.ep-row:hover{background:var(--surface-2)}
+.method{
+  font-size:.68rem;font-weight:700;letter-spacing:.06em;
+  padding:4px 9px;border-radius:6px;flex-shrink:0;
+  background:var(--mint-dim);color:var(--mint);
+  border:1px solid color-mix(in srgb, var(--mint) 30%, transparent);
+}
+.ep-path{font-size:.85rem;font-weight:500;flex-grow:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ep-path .param{color:var(--amber)}
+.ep-desc{font-family:var(--sans);font-size:.78rem;color:var(--faint);flex-shrink:1;display:none}
+@media(min-width:760px){.ep-desc{display:block}}
+.ep-status{font-size:.68rem;color:var(--faint);flex-shrink:0;display:flex;align-items:center;gap:8px}
+.ep-status .code{color:var(--mint);font-weight:700}
+.ep-status .ms{display:none}
+@media(min-width:560px){.ep-status .ms{display:inline}}
+.chev{width:16px;height:16px;flex-shrink:0;stroke:var(--faint);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease)}
+.endpoint.open .chev{transform:rotate(180deg);stroke:var(--mint)}
+.ep-body{
+  display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .45s var(--ease);
+}
+.endpoint.open .ep-body{grid-template-rows:1fr}
+.ep-inner{overflow:hidden}
+.ep-content{padding:6px 20px 24px;border-top:1px dashed var(--border-soft);margin:0 0}
+.resp-meta{
+  font-family:var(--mono);font-size:.68rem;color:var(--faint);
+  display:flex;gap:16px;flex-wrap:wrap;padding:12px 0 16px;
+}
+.resp-meta .ok{color:var(--mint)}
 
-  /* ---------- about / stats ---------- */
-  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px}
-  @media(max-width:680px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
-  .stat{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:22px 20px;transition:border-color .25s,transform .25s}
-  .stat:hover{border-color:var(--cyan-dim);transform:translateY(-3px)}
-  .stat .big{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700;color:var(--cyan);line-height:1}
-  .stat .cap{font-size:13px;color:var(--muted);margin-top:9px}
+/* ============ CONTENT INSIDE ENDPOINTS ============ */
+.job-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.job-title{font-size:1.05rem;font-weight:700}
+.job-org{color:var(--mint);font-weight:600}
+.job-dates{font-family:var(--mono);font-size:.72rem;color:var(--faint)}
+ul.points{list-style:none;margin-top:12px}
+ul.points li{
+  position:relative;padding-left:22px;margin-bottom:10px;
+  color:var(--ink-2);font-size:.92rem;
+}
+ul.points li::before{
+  content:"→";position:absolute;left:0;top:0;
+  font-family:var(--mono);color:var(--mint);font-size:.85rem;
+}
+ul.points li strong{color:var(--ink);font-weight:600}
+.metric{font-family:var(--mono);color:var(--amber);font-weight:500;font-size:.86em}
 
-  /* ---------- experience ---------- */
-  .xp{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:34px;position:relative}
-  .xp-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px}
-  .xp-role{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600}
-  .xp-co{color:var(--cyan);font-weight:500}
-  .xp-date{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);white-space:nowrap}
-  .xp-list{list-style:none;margin-top:22px;display:grid;gap:14px}
-  .xp-list li{position:relative;padding-left:26px;color:var(--text);font-size:15px}
-  .xp-list li::before{
-    content:"›";position:absolute;left:4px;top:-1px;color:var(--cyan);
-    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:17px;
-  }
-  .xp-list li b{color:#fff;font-weight:600}
+.proj-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.proj-title{font-size:1.05rem;font-weight:700}
+.proj-link{font-family:var(--mono);font-size:.72rem;display:inline-flex;align-items:center;gap:5px}
+.proj-tag{
+  display:inline-block;font-family:var(--mono);font-size:.66rem;
+  color:var(--amber);background:var(--amber-dim);
+  border:1px solid color-mix(in srgb, var(--amber) 30%, transparent);
+  padding:3px 8px;border-radius:5px;margin-top:8px;
+}
+.tools-line{margin-top:14px;font-family:var(--mono);font-size:.7rem;color:var(--faint)}
+.tools-line span{color:var(--ink-2)}
 
-  /* ---------- skills ---------- */
-  .skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-  @media(max-width:680px){.skill-grid{grid-template-columns:1fr}}
-  .skill-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px}
-  .skill-card h3{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:500}
-  .tags{display:flex;flex-wrap:wrap;gap:8px}
-  .tag{
-    font-family:'JetBrains Mono',monospace;font-size:12.5px;padding:6px 12px;border-radius:7px;
-    background:var(--panel-2);border:1px solid var(--line-bright);color:var(--text);transition:all .2s;
-  }
-  .tag:hover{border-color:var(--cyan);color:var(--cyan)}
-  .tag.key{border-color:var(--cyan-dim);color:var(--cyan)}
+/* skills */
+.skill-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;padding-top:6px}
+.skill-group{background:var(--surface-2);border:1px solid var(--border-soft);border-radius:8px;padding:14px 16px}
+.skill-group h4{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  font-family:var(--mono);font-size:.72rem;color:var(--ink-2);
+  background:var(--surface);border:1px solid var(--border);
+  padding:5px 10px;border-radius:6px;
+  transition:border-color .2s, color .2s, transform .15s;
+}
+.chip:hover{border-color:var(--mint);color:var(--mint);transform:translateY(-1px)}
+.chip.hot{border-color:color-mix(in srgb, var(--mint) 45%, var(--border));color:var(--mint);background:var(--mint-dim)}
 
-  /* ---------- projects ---------- */
-  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  @media(max-width:680px){.proj-grid{grid-template-columns:1fr}}
-  .proj{
-    display:flex;flex-direction:column;background:linear-gradient(180deg,var(--panel-2),var(--panel));
-    border:1px solid var(--line);border-radius:14px;padding:28px;transition:border-color .25s,transform .25s;
-  }
-  .proj:hover{border-color:var(--cyan-dim);transform:translateY(-4px)}
-  .proj-ico{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cyan);margin-bottom:18px;letter-spacing:1px}
-  .proj h3{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:600;margin-bottom:10px}
-  .proj p{color:var(--muted);font-size:14.5px;flex:1}
-  .proj-stack{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0}
-  .proj-stack span{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--dim);border:1px solid var(--line);padding:4px 9px;border-radius:6px}
-  .proj-link{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cyan);display:inline-flex;align-items:center;gap:7px;transition:gap .2s}
-  .proj-link:hover{gap:12px}
+/* certs & accomplishments */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;padding-top:6px}
+.cert{
+  background:var(--surface-2);border:1px solid var(--border-soft);border-radius:8px;
+  padding:16px;display:flex;gap:12px;align-items:flex-start;
+}
+.cert .ic{
+  width:34px;height:34px;flex-shrink:0;border-radius:8px;
+  display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:.72rem;
+  background:var(--blue-dim);color:var(--blue);border:1px solid color-mix(in srgb, var(--blue) 25%, transparent);
+}
+.cert .ic.amber{background:var(--amber-dim);color:var(--amber);border-color:color-mix(in srgb, var(--amber) 25%, transparent)}
+.cert .ic.mint{background:var(--mint-dim);color:var(--mint);border-color:color-mix(in srgb, var(--mint) 25%, transparent)}
+.cert b{display:block;font-size:.88rem;margin-bottom:2px}
+.cert small{color:var(--muted);font-size:.76rem;line-height:1.45;display:block}
 
-  /* ---------- certs ---------- */
-  .cert-row{display:flex;flex-wrap:wrap;gap:14px}
-  .cert{
-    flex:1;min-width:220px;background:var(--panel);border:1px solid var(--line);border-radius:11px;
-    padding:20px 22px;display:flex;align-items:center;gap:16px;transition:border-color .25s;
-  }
-  .cert:hover{border-color:var(--cyan-dim)}
-  .cert .seal{
-    width:42px;height:42px;border-radius:9px;flex-shrink:0;display:grid;place-items:center;
-    background:rgba(54,224,196,.1);border:1px solid var(--cyan-dim);color:var(--cyan);
-    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;
-  }
-  .cert .ct-name{font-weight:600;font-size:15px}
-  .cert .ct-sub{font-size:12.5px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:2px}
+/* education strip */
+.edu{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius);
+  padding:18px 20px;
+}
+.edu b{font-size:.95rem}
+.edu .deg{color:var(--muted);font-size:.85rem}
+.edu .gpa{font-family:var(--mono);font-size:.8rem;color:var(--mint);background:var(--mint-dim);padding:5px 11px;border-radius:6px;border:1px solid color-mix(in srgb, var(--mint) 28%, transparent)}
 
-  /* ---------- contact ---------- */
-  .contact{text-align:center;padding:90px 0 70px}
-  .contact h2{margin-bottom:14px}
-  .contact p{color:var(--muted);max-width:480px;margin:0 auto 32px;font-size:16px}
-  .contact-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
-  .c-link{
-    font-family:'JetBrains Mono',monospace;font-size:13.5px;padding:12px 20px;border-radius:8px;
-    border:1px solid var(--line-bright);transition:all .2s;display:flex;align-items:center;gap:9px;
-  }
-  .c-link:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px)}
+/* ============ FOOTER / CONTACT ============ */
+footer.site{padding:56px 0 40px;border-top:1px solid var(--border-soft);margin-top:36px}
+.contact-card{
+  background:var(--terminal-bg);border:1px solid var(--border);border-radius:14px;
+  padding:28px;font-family:var(--mono);color:#C4D2E0;font-size:.8rem;line-height:1.9;
+  box-shadow:var(--shadow);
+}
+.contact-card .prompt{color:#57C99B}
+.contact-card a{color:#7FB5FF}
+.foot-note{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:22px;color:var(--faint);font-size:.75rem;font-family:var(--mono)}
 
-  footer{border-top:1px solid var(--line);padding:26px 0;position:relative;z-index:1}
-  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--dim)}
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease), transform .6s var(--ease)}
+.reveal.in{opacity:1;transform:none}
 
-  /* reveal on scroll */
-  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.in{opacity:1;transform:none}
-  @media(prefers-reduced-motion:reduce){
-    .reveal{opacity:1;transform:none;transition:none}
-    .brand .dot,.status .s-dot{animation:none}
-    html{scroll-behavior:auto}
-  }
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+@media(max-width:860px){
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .hero{padding:48px 0 40px}
+  .nav-links a:not(.keep){display:none}
+}
 </style>
 </head>
 <body>
-<div class="grid-bg"></div>
 
-<nav>
-  <div class="wrap">
-    <div class="brand"><span class="dot"></span>PK<span style="color:var(--dim)">_</span><span style="color:var(--muted)">sec</span></div>
-    <div class="navlinks">
-      <a href="#about">about</a>
-      <a href="#experience">experience</a>
-      <a href="#skills">skills</a>
-      <a href="#projects">projects</a>
-      <a href="#contact">contact</a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="wrap">
-    <div class="eyebrow">CyberArk · Privileged Access Management</div>
-    <h1>Pranav<br>Kumbhalkar<span class="accent">.</span></h1>
-    <p class="lede">PAM engineer securing enterprise <strong>privileged access</strong> at scale — administering CyberArk Vault, CPM, PVWA, PSM &amp; DR Vault across highly available production environments, and building <strong>just-in-time access</strong> and <strong>secrets management</strong> tools from the ground up.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="#projects">View projects →</a>
-      <a class="btn btn-ghost" href="#contact">Get in touch</a>
-    </div>
-
-    <!-- signature: live vault status panel -->
-    <div class="vault reveal">
-      <div class="vault-head">
-        <div class="lights"><span class="l-red"></span><span class="l-amber"></span><span class="l-green"></span></div>
-        <span class="vault-title">~ /cyberark/vault — session: active</span>
-      </div>
-      <div class="vault-body">
-        <div class="vrow"><span class="idx">01</span><span class="label">Vault · CPM · PVWA · PSM · DR Vault &nbsp;<b>// administered</b></span><span class="status"><span class="s-dot"></span>99.9% uptime</span></div>
-        <div class="vrow"><span class="idx">02</span><span class="label">Privileged account lifecycle &nbsp;<b>// onboarding → rotation → revocation</b></span><span class="status"><span class="s-dot"></span>governed</span></div>
-        <div class="vrow"><span class="idx">03</span><span class="label">Splunk + Microsoft Sentinel &nbsp;<b>// SIEM log integration</b></span><span class="status"><span class="s-dot"></span>streaming</span></div>
-        <div class="vrow"><span class="idx">04</span><span class="label">LDAP · Active Directory · SAML &nbsp;<b>// authentication</b></span><span class="status"><span class="s-dot"></span>integrated</span></div>
-      </div>
-    </div>
+<header class="site">
+  <div class="wrap nav">
+    <div class="nav-brand"><span class="dot" aria-hidden="true"></span>pranav@api:~$</div>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#experience">/experience</a>
+      <a href="#projects">/projects</a>
+      <a href="#skills">/skills</a>
+      <a href="#contact" class="keep">/contact</a>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <span class="theme-label">light</span>
+      </button>
+    </nav>
   </div>
 </header>
 
-<section id="about">
-  <div class="wrap">
-    <div class="sec-label"><span class="num">01</span> About</div>
-    <h2 class="reveal">Privileged access, owned end to end.</h2>
-    <p class="sec-intro reveal">Security Delivery Associate at Accenture working across enterprise-scale CyberArk PAM infrastructure — from day-to-day Vault administration and incident resolution to access governance, compliance reporting, and SIEM integration. Comfortable owning the privileged account lifecycle and translating operational reality into client-ready documentation.</p>
-    <div class="stat-grid">
-      <div class="stat reveal"><div class="big">99.9%</div><div class="cap">PAM platform uptime sustained in production</div></div>
-      <div class="stat reveal"><div class="big">2×</div><div class="cap">CyberArk certifications — Defender &amp; Sentry</div></div>
-      <div class="stat reveal"><div class="big">P3</div><div class="cap">Accenture CyberArk/PAM proficiency (P1–P5)</div></div>
-      <div class="stat reveal"><div class="big">9.31</div><div class="cap">B.Tech IT CGPA / 10.0</div></div>
+<main>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">● open to Java backend / API roles</span>
+        <h1>Pranav Kumbhalkar<br><span class="accent">builds backend systems</span><br>that hold up in production.</h1>
+        <p class="hero-sub">Java backend engineer with <strong>2+ years at Accenture</strong> shipping microservices with <strong>Spring Boot, Kafka, and AWS</strong> — with a bias for secure-by-design APIs, audit trails, and clean test coverage.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#experience">▸ Explore the API</a>
+          <a class="btn btn-ghost" href="https://github.com/Pranav1817" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn btn-ghost" href="https://linkedin.com/in/pranav-kumbhalkar" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="n" data-count="2300">0</div><div class="l">DSA problems solved</div></div>
+          <div class="stat"><div class="n" data-count="3">0</div><div class="l">Production services</div></div>
+          <div class="stat"><div class="n">9.31</div><div class="l">CGPA · B.E. IT</div></div>
+        </div>
+      </div>
+      <div class="terminal reveal in" aria-label="Terminal demo">
+        <div class="term-bar">
+          <span class="b b1"></span><span class="b b2"></span><span class="b b3"></span>
+          <span class="title">pranav — zsh</span>
+        </div>
+        <div class="term-body" id="termBody"></div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="experience">
-  <div class="wrap">
-    <div class="sec-label"><span class="num">02</span> Experience</div>
-    <h2 class="reveal">Where the work happens</h2>
-    <div class="xp reveal">
-      <div class="xp-top">
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Experience</h2>
+        <span class="path">// click an endpoint to call it</span>
+      </div>
+
+      <div class="endpoint reveal open" data-endpoint>
+        <button class="ep-row" aria-expanded="true">
+          <span class="method">GET</span>
+          <span class="ep-path">/experience/<span class="param">accenture</span></span>
+          <span class="ep-desc">Software Development Engineer</span>
+          <span class="ep-status"><span class="code">200</span><span class="ms" data-ms></span></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="ep-body"><div class="ep-inner"><div class="ep-content">
+          <div class="resp-meta"><span class="ok">✓ 200 OK</span><span>content-type: application/experience+json</span></div>
+          <div class="job-head">
+            <div><span class="job-title">Software Development Engineer</span> · <span class="job-org">Accenture</span></div>
+            <span class="job-dates">Mar 2024 — Present · Pune, India</span>
+          </div>
+          <ul class="points">
+            <li>Developed and maintained <strong>microservices-based IT applications</strong> in Java and Spring Boot across the full SDLC — contributing to <span class="metric">3+ production services</span> for enterprise clients with high-availability architecture.</li>
+            <li>Designed <strong>Apache Kafka event-driven messaging pipelines</strong> for asynchronous inter-service communication, improving decoupling and cutting synchronous API bottlenecks by <span class="metric">~35%</span>.</li>
+            <li>Performed data analysis with <strong>SQL on PostgreSQL and MongoDB</strong> to validate data integrity and troubleshoot production issues; authored <strong>JUnit/Mockito suites</strong> hitting <span class="metric">80%+ coverage</span>.</li>
+            <li>Conducted <strong>peer code reviews</strong> assessing quality, security, and standards adherence; documented technical designs, test evidence, and deployment procedures for Agile ceremonies.</li>
+            <li>Deployed and supported services on <strong>AWS (EC2, S3) and Linux</strong> via Git-based <strong>CI/CD pipelines</strong>, following change management and release processes.</li>
+          </ul>
+        </div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Projects</h2>
+        <span class="path">// GET /projects/{id}</span>
+      </div>
+
+      <div class="endpoint reveal" data-endpoint>
+        <button class="ep-row" aria-expanded="false">
+          <span class="method">GET</span>
+          <span class="ep-path">/projects/<span class="param">jit-access-provider</span></span>
+          <span class="ep-desc">Just-in-time privileged access for servers</span>
+          <span class="ep-status"><span class="code">200</span><span class="ms" data-ms></span></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="ep-body"><div class="ep-inner"><div class="ep-content">
+          <div class="resp-meta"><span class="ok">✓ 200 OK</span><span>content-type: application/project+json</span></div>
+          <div class="proj-head">
+            <span class="proj-title">JIT Access Provider</span>
+            <a class="proj-link" href="https://github.com/Pranav1817" target="_blank" rel="noopener">view source ↗</a>
+          </div>
+          <span class="proj-tag">security · access control</span>
+          <ul class="points">
+            <li>Engineered a <strong>Just-In-Time VM Access Provider</strong> enforcing on-demand, time-bound SSH access to Linux and Windows servers — mitigating standing-credential risk and reducing attack surface by <span class="metric">~90%</span>.</li>
+            <li>Implemented <strong>RBAC with Spring Security</strong> across <span class="metric">10+ secured endpoints</span>; automated provisioning and revocation of temporary OS-level users via JSch SSH on a 60-second scheduler.</li>
+            <li>Designed a normalized <strong>MySQL schema with a complete audit trail</strong> of every access session — grant time, expiry, revocation status — enabling review and accountability of privileged access.</li>
+          </ul>
+          <p class="tools-line">stack: <span>Java · Spring Boot · Spring Security · Spring Data JPA · Hibernate · MySQL · JSch · Maven</span></p>
+        </div></div></div>
+      </div>
+
+      <div class="endpoint reveal" data-endpoint>
+        <button class="ep-row" aria-expanded="false">
+          <span class="method">GET</span>
+          <span class="ep-path">/projects/<span class="param">keymatrix</span></span>
+          <span class="ep-desc">Encrypted desktop credential manager</span>
+          <span class="ep-status"><span class="code">200</span><span class="ms" data-ms></span></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="ep-body"><div class="ep-inner"><div class="ep-content">
+          <div class="resp-meta"><span class="ok">✓ 200 OK</span><span>content-type: application/project+json</span></div>
+          <div class="proj-head">
+            <span class="proj-title">KeyMatrix</span>
+            <a class="proj-link" href="https://github.com/Pranav1817" target="_blank" rel="noopener">view source ↗</a>
+          </div>
+          <span class="proj-tag">encryption · desktop app</span>
+          <ul class="points">
+            <li>Designed a secure <strong>JavaFX credential manager</strong> handling <span class="metric">100+ credentials</span> with <strong>AES-256 encryption + PBKDF2 key derivation</strong> and zero plaintext exposure at rest.</li>
+            <li>Built full <strong>CRUD credential lifecycle</strong> with search and filter, reducing average retrieval time by <span class="metric">~40%</span>; packaged as a Windows MSI installer with a bundled Java runtime.</li>
+          </ul>
+          <p class="tools-line">stack: <span>Java · JavaFX · AES-256 · PBKDF2 · MSI packaging</span></p>
+        </div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Skills</h2>
+        <span class="path">// GET /skills</span>
+      </div>
+      <div class="endpoint reveal" data-endpoint>
+        <button class="ep-row" aria-expanded="false">
+          <span class="method">GET</span>
+          <span class="ep-path">/skills</span>
+          <span class="ep-desc">Languages, frameworks, infra & data</span>
+          <span class="ep-status"><span class="code">200</span><span class="ms" data-ms></span></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="ep-body"><div class="ep-inner"><div class="ep-content">
+          <div class="resp-meta"><span class="ok">✓ 200 OK</span><span>content-type: application/skills+json</span></div>
+          <div class="skill-groups">
+            <div class="skill-group">
+              <h4>Languages</h4>
+              <div class="chips">
+                <span class="chip hot">Java</span><span class="chip">Python</span><span class="chip">C++</span><span class="chip">SQL</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h4>Backend & frameworks</h4>
+              <div class="chips">
+                <span class="chip hot">Spring Boot</span><span class="chip">Spring Security</span><span class="chip">Spring Data JPA</span><span class="chip">Hibernate</span><span class="chip">JUnit / Mockito</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h4>Messaging & infra</h4>
+              <div class="chips">
+                <span class="chip hot">Apache Kafka</span><span class="chip">AWS (EC2, S3)</span><span class="chip">Linux</span><span class="chip">Git · CI/CD</span><span class="chip">Maven</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h4>Databases & data</h4>
+              <div class="chips">
+                <span class="chip">Oracle SQL</span><span class="chip">MySQL</span><span class="chip">PostgreSQL</span><span class="chip">MongoDB</span><span class="chip">Excel</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h4>Security & controls</h4>
+              <div class="chips">
+                <span class="chip">RBAC</span><span class="chip">Access management</span><span class="chip">Audit trails</span><span class="chip">ITGC</span><span class="chip">Risk assessment</span>
+              </div>
+            </div>
+          </div>
+        </div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CERTS & MORE ============ -->
+  <section id="credentials">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Credentials</h2>
+        <span class="path">// GET /credentials</span>
+      </div>
+      <div class="cert-grid reveal">
+        <div class="cert"><div class="ic">OCA</div><div><b>Oracle Certified Java Associate</b><small>Core Java language certification</small></div></div>
+        <div class="cert"><div class="ic amber">AI</div><div><b>Oracle AI Foundation</b><small>AI fundamentals certification</small></div></div>
+        <div class="cert"><div class="ic mint">AWS</div><div><b>AWS Certification</b><small>Cloud fundamentals · in progress</small></div></div>
+        <div class="cert"><div class="ic mint">3rd</div><div><b>Competitive coding — 3rd / 300</b><small>Technical Club contest, RCOEM · merit scholarship for 9.31 CGPA</small></div></div>
+      </div>
+      <div style="height:16px"></div>
+      <div class="edu reveal">
         <div>
-          <div class="xp-role">Security Delivery Associate</div>
-          <div class="xp-co">Accenture · Pune, India</div>
+          <b>Ramdeobaba University</b>
+          <div class="deg">B.E. Information Technology · May 2020 — May 2024</div>
         </div>
-        <div class="xp-date">Mar 2024 — Present</div>
-      </div>
-      <ul class="xp-list">
-        <li>Administered end-to-end <b>CyberArk PAM</b> infrastructure — Vault, DR Vault, CPM, PVWA, PSM, PrivateArk — across highly available production environments, sustaining <b>99.9%+ uptime</b>.</li>
-        <li>Engineered privileged account lifecycle processes: onboarding, offboarding, <b>password rotation &amp; reconciliation</b>, Safe management, and access revocation via CPM policies.</li>
-        <li>Governed Safe permissions, <b>RBAC</b> policies, and dual-control workflows, enforcing least-privilege access in line with enterprise security and compliance standards.</li>
-        <li>Integrated <b>Splunk</b> and <b>Microsoft Sentinel</b> with the CyberArk Vault for secure log transfer to SIEM — enabling centralized monitoring and audit visibility.</li>
-        <li>Automated non-compliant account triage with AI-assisted <b>PowerShell</b> scripts reconciling CyberArk against the global inventory and running reachability checks.</li>
-        <li>Troubleshot critical incidents — CPM failures, reconciliation mismatches, Vault connectivity, PSM launch failures — while maintaining <b>SLA</b> compliance in ServiceNow.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="skills">
-  <div class="wrap">
-    <div class="sec-label"><span class="num">03</span> Capabilities</div>
-    <h2 class="reveal">The toolkit</h2>
-    <div class="skill-grid">
-      <div class="skill-card reveal">
-        <h3>CyberArk</h3>
-        <div class="tags">
-          <span class="tag key">Vault</span><span class="tag key">CPM</span><span class="tag key">PVWA</span><span class="tag key">PSM</span><span class="tag key">DR Vault</span><span class="tag">PrivateArk</span><span class="tag">Safe Management</span><span class="tag">CCP</span>
-        </div>
-      </div>
-      <div class="skill-card reveal">
-        <h3>IAM / Security</h3>
-        <div class="tags">
-          <span class="tag key">PAM</span><span class="tag key">IAM</span><span class="tag">RBAC</span><span class="tag">Access Governance</span><span class="tag">Password Rotation</span><span class="tag">Session Monitoring</span>
-        </div>
-      </div>
-      <div class="skill-card reveal">
-        <h3>Authentication &amp; Directory</h3>
-        <div class="tags">
-          <span class="tag">Active Directory</span><span class="tag">LDAP</span><span class="tag">SAML</span><span class="tag">OAuth 2.0</span><span class="tag">OpenID Connect</span><span class="tag">PKCE</span>
-        </div>
-      </div>
-      <div class="skill-card reveal">
-        <h3>Platforms · Tooling · Code</h3>
-        <div class="tags">
-          <span class="tag">Windows Server</span><span class="tag">Linux</span><span class="tag">ServiceNow</span><span class="tag">Splunk</span><span class="tag">Sentinel</span><span class="tag">REST APIs</span><span class="tag">Java</span><span class="tag">Go</span><span class="tag">PowerShell</span>
-        </div>
+        <span class="gpa">CGPA 9.31 / 10</span>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</main>
 
-<section id="projects">
+<!-- ============ CONTACT ============ -->
+<footer class="site" id="contact">
   <div class="wrap">
-    <div class="sec-label"><span class="num">04</span> Projects</div>
-    <h2 class="reveal">Built to understand the problem</h2>
-    <p class="sec-intro reveal">Personal security projects that put PAM concepts into working code — just-in-time access and encrypted secret storage, built hands-on.</p>
-    <div class="proj-grid">
-      <div class="proj reveal">
-        <div class="proj-ico">[ JIT ]</div>
-        <h3>JIT Access Provider</h3>
-        <p>A Just-in-Time access tool for Windows &amp; Linux servers. Admins register machines; users request time-bound elevated access (15 min–8 hrs) and receive auto-generated SSH credentials. A background scheduler deprovisions temporary accounts on expiry — enforcing zero standing privilege.</p>
-        <div class="proj-stack"><span>Java</span><span>Spring Boot</span><span>SSH</span><span>MySQL</span></div>
-        <a class="proj-link" href="https://github.com/Pranav1817/JIT-Access-Provider" target="_blank" rel="noopener">View on GitHub →</a>
-      </div>
-      <div class="proj reveal">
-        <div class="proj-ico">[ KEY ]</div>
-        <h3>KeyMatrix — Password Manager</h3>
-        <p>A standalone JavaFX desktop credential manager storing passwords, API keys, and certificates encrypted at rest with <b style="color:var(--cyan);font-weight:500">AES-256</b> and <b style="color:var(--cyan);font-weight:500">PBKDF2</b> key derivation. Full CRUD, packaged as a one-click Windows MSI with bundled runtime.</p>
-        <div class="proj-stack"><span>Java</span><span>JavaFX</span><span>AES-256</span><span>PBKDF2</span></div>
-        <a class="proj-link" href="https://github.com/Pranav1817/KeyMatrix" target="_blank" rel="noopener">View on GitHub →</a>
-      </div>
+    <div class="contact-card reveal">
+      <div><span class="prompt">$</span> curl -X POST api.pranav.dev<span style="color:#F2A65A">/contact</span></div>
+      <div>&nbsp;</div>
+      <div><span style="color:#7FB5FF">"email"</span>: <a href="mailto:pranavkumbhalkar5@gmail.com">"pranavkumbhalkar5@gmail.com"</a>,</div>
+      <div><span style="color:#7FB5FF">"phone"</span>: <a href="tel:+917558679782">"+91-7558679782"</a>,</div>
+      <div><span style="color:#7FB5FF">"linkedin"</span>: <a href="https://linkedin.com/in/pranav-kumbhalkar" target="_blank" rel="noopener">"linkedin.com/in/pranav-kumbhalkar"</a>,</div>
+      <div><span style="color:#7FB5FF">"github"</span>: <a href="https://github.com/Pranav1817" target="_blank" rel="noopener">"github.com/Pranav1817"</a>,</div>
+      <div><span style="color:#7FB5FF">"location"</span>: <span style="color:#9CD2A8">"Maharashtra, India"</span></div>
+      <div>&nbsp;</div>
+      <div class="term-status">✓ 202 Accepted — I usually respond within a day.</div>
     </div>
-  </div>
-</section>
-
-<section id="certs">
-  <div class="wrap">
-    <div class="sec-label"><span class="num">05</span> Credentials</div>
-    <h2 class="reveal">Certified &amp; validated</h2>
-    <div class="cert-row">
-      <div class="cert reveal"><div class="seal">CA</div><div><div class="ct-name">CyberArk Defender</div><div class="ct-sub">PAM Operations</div></div></div>
-      <div class="cert reveal"><div class="seal">CA</div><div><div class="ct-name">CyberArk Sentry</div><div class="ct-sub">PAM Deployment</div></div></div>
-      <div class="cert reveal"><div class="seal">JV</div><div><div class="ct-name">Oracle Certified Associate</div><div class="ct-sub">Java SE Programmer</div></div></div>
+    <div class="foot-note">
+      <span>© 2026 Pranav Kumbhalkar</span>
+      <span>designed as a living API — uptime 100%</span>
     </div>
-  </div>
-</section>
-
-<section class="contact" id="contact">
-  <div class="wrap">
-    <div class="sec-label" style="justify-content:center"><span class="num">06</span> Contact</div>
-    <h2 class="reveal">Let's secure something.</h2>
-    <p class="reveal">Open to PAM, IAM, and identity security roles. Reach out and let's talk privileged access.</p>
-    <div class="contact-links reveal">
-      <a class="c-link" href="mailto:pranavkumbhalkar5@gmail.com">✉ pranavkumbhalkar5@gmail.com</a>
-      <a class="c-link" href="https://github.com/Pranav1817" target="_blank" rel="noopener">⌂ GitHub</a>
-      <a class="c-link" href="tel:+917558679782">☎ +91 7558679782</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <span>© 2026 Pranav Kumbhalkar</span>
-    <span>Pune, Maharashtra, India</span>
   </div>
 </footer>
 
 <script>
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-  },{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+(function(){
+  "use strict";
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- THEME ---------- */
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var label = btn.querySelector('.theme-label');
+  function safeGet(k){ try { return window.localStorage.getItem(k); } catch(e){ return null; } }
+  function safeSet(k,v){ try { window.localStorage.setItem(k,v); } catch(e){} }
+  function applyTheme(t){
+    root.setAttribute('data-theme', t);
+    label.textContent = t === 'dark' ? 'light' : 'dark';
+    btn.setAttribute('aria-label', 'Switch to ' + (t === 'dark' ? 'light' : 'dark') + ' theme');
+  }
+  var saved = safeGet('pk-theme');
+  applyTheme(saved === 'light' || saved === 'dark' ? saved : 'dark');
+  btn.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    safeSet('pk-theme', next);
+  });
+
+  /* ---------- ENDPOINT ACCORDIONS ---------- */
+  document.querySelectorAll('[data-endpoint]').forEach(function(ep){
+    var row = ep.querySelector('.ep-row');
+    row.addEventListener('click', function(){
+      var open = ep.classList.toggle('open');
+      row.setAttribute('aria-expanded', String(open));
+    });
+    /* fake-but-plausible latency badge */
+    var ms = ep.querySelector('[data-ms]');
+    if (ms) ms.textContent = (18 + Math.floor(Math.random()*40)) + ' ms';
+  });
+
+  /* ---------- SCROLL REVEALS ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !prefersReduced){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- STAT COUNTERS ---------- */
+  function animateCount(el){
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    if (prefersReduced){ el.textContent = target.toLocaleString() + '+'; return; }
+    var start = null, dur = 1200;
+    function step(ts){
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased).toLocaleString() + (p === 1 ? '+' : '');
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  document.querySelectorAll('[data-count]').forEach(animateCount);
+
+  /* ---------- HERO TERMINAL TYPING ---------- */
+  var term = document.getElementById('termBody');
+  var cmdText = 'curl -s https://api.pranav.dev/v1/profile';
+  var jsonLines = [
+    '<span class="t-brace">{</span>',
+    '  <span class="t-key">"name"</span>: <span class="t-str">"Pranav Kumbhalkar"</span>,',
+    '  <span class="t-key">"role"</span>: <span class="t-str">"Java Backend Engineer"</span>,',
+    '  <span class="t-key">"experience_years"</span>: <span class="t-num">2</span>,',
+    '  <span class="t-key">"core"</span>: [<span class="t-str">"Spring Boot"</span>, <span class="t-str">"Kafka"</span>, <span class="t-str">"AWS"</span>],',
+    '  <span class="t-key">"focus"</span>: <span class="t-str">"secure, event-driven APIs"</span>,',
+    '  <span class="t-key">"dsa_problems_solved"</span>: <span class="t-num">2300</span>,',
+    '  <span class="t-key">"status"</span>: <span class="t-str">"open_to_opportunities"</span>',
+    '<span class="t-brace">}</span>',
+    '<span class="term-status">✓ 200 OK · handled in 42 ms</span>'
+  ];
+
+  function renderInstant(){
+    var html = '<div><span class="prompt">$</span> <span class="cmd">' + cmdText + '</span></div>';
+    jsonLines.forEach(function(l){ html += '<div>' + l + '</div>'; });
+    html += '<div><span class="prompt">$</span> <span class="cursor"></span></div>';
+    term.innerHTML = html;
+  }
+
+  if (prefersReduced){ renderInstant(); }
+  else {
+    var typed = 0;
+    var cmdEl = document.createElement('div');
+    cmdEl.innerHTML = '<span class="prompt">$</span> <span class="cmd"></span><span class="cursor"></span>';
+    term.appendChild(cmdEl);
+    var cmdSpan = cmdEl.querySelector('.cmd');
+    var typeInt = setInterval(function(){
+      typed++;
+      cmdSpan.textContent = cmdText.slice(0, typed);
+      if (typed >= cmdText.length){
+        clearInterval(typeInt);
+        cmdEl.querySelector('.cursor').remove();
+        var i = 0;
+        var lineInt = setInterval(function(){
+          var d = document.createElement('div');
+          d.innerHTML = jsonLines[i];
+          term.appendChild(d);
+          i++;
+          if (i >= jsonLines.length){
+            clearInterval(lineInt);
+            var p = document.createElement('div');
+            p.innerHTML = '<span class="prompt">$</span> <span class="cursor"></span>';
+            term.appendChild(p);
+          }
+        }, 110);
+      }
+    }, 34);
+  }
+})();
 </script>
 </body>
 </html>
